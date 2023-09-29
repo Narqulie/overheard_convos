@@ -29,7 +29,7 @@ try:
         openai_max_tokens = config['max_tokens']
         openai_temperature = config['temperature']
         min_post_interval = config['min_post_interval']
-        max_post_interval = config['post_interval']
+        max_post_interval = config['max_post_interval']
 except Exception as e:
     logging.error(e)
     exit()

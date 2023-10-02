@@ -147,7 +147,7 @@ def get_models():
 # --- Get weather overheard from OpenAI ---
 def openai_overhear():
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[{"role": "user",
                   "content": openai_prompt}],
         max_tokens=int(openai_max_tokens))

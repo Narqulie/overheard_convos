@@ -202,6 +202,8 @@ def main():
             if len(overheard) > 500:
                 logging.info("overheard too long, cutting to 500 characters")
                 to_post = get_distracted(overheard)
+            else:
+                to_post = overheard
 
             # Post Overheard Conversation
             logging.info("Posting conversation")

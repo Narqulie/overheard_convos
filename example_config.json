@@ -1,9 +1,9 @@
 {
-    "mastodon_access_token": "XXX",
-    "mastodon_base_url": "https://mastodon.social",
-    "openai_api_key": "YYY",
-    "max_tokens": "500",
-    "temperature": "1",
-    "min_post_interval": 3600,
-    "max_post_interval": 14400
-    }
+    "mastodon_access_token": "<YOUR_MASTODON_ACCESS_TOKEN>",
+    "mastodon_base_url": "<YOUR_MASTODON_BASE_URL>",
+    "openai_api_key": "<YOUR_OPENAI_API_KEY>",
+    "max_tokens": <MAX_TOKENS>,
+    "temperature": <TEMPERATURE_VALUE>,
+    "min_post_interval": <MIN_INTERVAL_IN_SECONDS>,
+    "max_post_interval": <MAX_INTERVAL_IN_SECONDS>
+}

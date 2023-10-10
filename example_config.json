@@ -1,0 +1,9 @@
+{
+    "mastodon_access_token": "XXX",
+    "mastodon_base_url": "https://mastodon.social",
+    "openai_api_key": "YYY",
+    "max_tokens": "500",
+    "temperature": "1",
+    "min_post_interval": 3600,
+    "max_post_interval": 14400
+    }

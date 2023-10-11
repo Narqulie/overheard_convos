@@ -1,4 +1,4 @@
-# Overheard Conversations Bot - README.md
+# Overheard Conversations Bot
 
 ## Overview
 

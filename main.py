@@ -44,8 +44,8 @@ def get_prompt():
     than names (e.g., "a young mother," "an elderly man reading a newspaper").
     The dialogue can capture the essence of ordinary life: a casual remark,
     a shared observation, or a common concern.
-    There's limited context, and while the tone can range from light to serious,
-    keep it grounded in day-to-day reality.
+    There's limited context, and while the tone can range
+    from light to serious, keep it grounded in day-to-day reality.
     The conversation doesn't need a clear start or end.
     Stay within a 500 character limit.
     The weirdness rating for this conversation is {weirdness}. This is a number
@@ -63,6 +63,7 @@ def setup_openai():
     logging.info(openai.prompt)
     # openai.max_tokens = openai_max_tokens
     openai.temperature = openai_temperature
+
 
 # Mastodon API setup
 m = Mastodon(access_token=mastodon_access_token,
@@ -155,11 +156,13 @@ def get_models():
     models = openai.Model.list()
     print(models)
 
+
 # Generate weirdness-rating
 def generate_weirdness():
     weirdness = random.randint(1, 1000)
     logging.info(f"Weirdness: {weirdness}")
     return weirdness
+
 
 # --- Get weather overheard from OpenAI ---
 def openai_overhear():

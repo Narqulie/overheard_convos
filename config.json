@@ -1,0 +1,9 @@
+{
+    "mastodon_access_token": "ikhEQRXITKdVS8rIVjOEF-s5G9RkeG3k371aF8J390w",
+    "mastodon_base_url": "https://mastodon.social",
+    "openai_api_key": "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",
+    "max_tokens": "500",
+    "temperature": "1",
+    "min_post_interval": 36000,
+    "max_post_interval": 86400
+    }

@@ -34,24 +34,35 @@ except Exception as e:
     logging.error(e)
     exit()
 
-openai_prompt = """
-Overheard at a cafe:
-Craft a short snippet of a conversation involving 2 to 4 individuals.
-Describe each participant with simple, everyday characteristics rather
-than names (e.g., "a young mother," "an elderly man reading a newspaper").
-The dialogue can capture the essence of ordinary life: a casual remark,
-a shared observation, or a common concern.
-There's limited context, and while the tone can range from light to serious,
-keep it grounded in day-to-day reality.
-The conversation doesn't need a clear start or end.
-Stay within a 500 character limit.
-"""
+
+def get_prompt():
+    weirdness = generate_weirdness()
+    openai_prompt = f"""
+    Overheard at a cafe:
+    Craft a short snippet of a conversation involving 2 to 4 individuals.
+    Describe each participant with simple, everyday characteristics rather
+    than names (e.g., "a young mother," "an elderly man reading a newspaper").
+    The dialogue can capture the essence of ordinary life: a casual remark,
+    a shared observation, or a common concern.
+    There's limited context, and while the tone can range from light to serious,
+    keep it grounded in day-to-day reality.
+    The conversation doesn't need a clear start or end.
+    Stay within a 500 character limit.
+    The weirdness rating for this conversation is {weirdness}. This is a number
+    between 1 and 1000 that indicates how weird the conversation should be.
+    1 is mundane and normal, and the closer to 1000 the unmber is, the weirder,
+    more bizzarre the conversation should be in tone, content ant theme.
+    """
+    return openai_prompt
+
 
 # OpenAI setup
-openai.api_key = openai_api_key
-openai.prompt = openai_prompt
-# openai.max_tokens = openai_max_tokens
-openai.temperature = openai_temperature
+def setup_openai():
+    openai.api_key = openai_api_key
+    openai.prompt = get_prompt()
+    logging.info(openai.prompt)
+    # openai.max_tokens = openai_max_tokens
+    openai.temperature = openai_temperature
 
 # Mastodon API setup
 m = Mastodon(access_token=mastodon_access_token,
@@ -59,6 +70,7 @@ m = Mastodon(access_token=mastodon_access_token,
 
 # Variables
 post_count = 1
+weirdness = 1
 
 distractions = [
     "A glass shatters on the floor.",
@@ -143,13 +155,18 @@ def get_models():
     models = openai.Model.list()
     print(models)
 
+# Generate weirdness-rating
+def generate_weirdness():
+    weirdness = random.randint(1, 1000)
+    logging.info(f"Weirdness: {weirdness}")
+    return weirdness
 
 # --- Get weather overheard from OpenAI ---
 def openai_overhear():
     completion = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-4-1106-preview",
         messages=[{"role": "user",
-                  "content": openai_prompt}],
+                  "content": openai.prompt}],
         max_tokens=int(openai_max_tokens))
     overheard = completion.choices[0].message.content
     logging.info(overheard)
@@ -194,6 +211,7 @@ def main():
             print_banner()
             logging.info(f"Post number: {post_count}")
 
+            setup_openai()
             # Get Overheard Conversation
             logging.info("Getting conversation")
             overheard = openai_overhear()

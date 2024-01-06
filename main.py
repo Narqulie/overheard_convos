@@ -161,7 +161,7 @@ def generate_weirdness():
     return weirdness
 
 
-# --- Get weather overheard from OpenAI ---
+# --- Get overheard conversation from OpenAI ---
 def openai_overhear():
     completion = openai.chat.completions.create(
         model="gpt-4-1106-preview",
@@ -175,13 +175,23 @@ def openai_overhear():
     return overheard
 
 
-def generate_image(overheard):
+def get_image_prompt(overheard):
+    openai.prompt
+    genned_prompt = openai.chat.completions.create(
+        model="gpt-4-1106-preview",
+        messages=[{"role": "user",
+                  "content":f"Generate a prompt for picture generation based on this conversation: {overheard}. Show all the individuals and things involved, to show the full scale of the scene happening. Be creative and try to show the interesting parts of the scene."}],
+        max_tokens=int(openai_max_tokens))
+    image_prompt = genned_prompt.choices[0].message.content
+    return image_prompt
+
+
+def generate_image(image_prompt):
     logging.info("Generating image")
+    logging.info(image_prompt)
     response = openai.images.generate(
         model="dall-e-3",
-        prompt="""Generate a picture of this scene: {overheard}.
-        Show all the individuals and things involved, to show
-        the full scale of the scene happening.""",
+        prompt=image_prompt,
         size="1024x1024",
         quality="standard",
         n=1,
@@ -243,7 +253,8 @@ def main():
             # Get Overheard Conversation
             logging.info("Getting conversation")
             overheard = openai_overhear()
-            generated_image = generate_image(overheard)
+            image_prompt = get_image_prompt(overheard)
+            generated_image = generate_image(image_prompt)
 
             # Check the length of the overheard and cut:
             if len(overheard) > 500:
